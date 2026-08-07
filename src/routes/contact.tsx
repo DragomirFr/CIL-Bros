@@ -63,7 +63,7 @@ function ContactPage() {
             {PHONE}
           </a>
           <p className="mt-3 text-sm text-muted-foreground">
-            Quickest way to reach us. Monday – Saturday, 7am – 6pm.
+            Quickest way to reach us.
           </p>
         </div>
         <div className="bg-card p-8">
