@@ -71,13 +71,7 @@ function PrivacyPage() {
           <li>Law enforcement or regulatory authorities, if required by law</li>
         </ul>
 
-        <h2>How long we keep your data</h2>
-        <p>
-          We keep enquiry records for <strong>12 months</strong> if no contract follows. For
-          completed jobs, we retain invoices, contracts, and job records for{" "}
-          <strong>6 years</strong> after completion to meet tax, insurance and warranty
-          requirements.
-        </p>
+        
 
         <h2>Your rights</h2>
         <p>Under UK data protection law, you have the right to:</p>
