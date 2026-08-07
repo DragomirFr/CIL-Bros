@@ -26,8 +26,7 @@ function TermsPage() {
       <div className="prose prose-sm mt-8 max-w-none space-y-6 text-foreground [&_a]:text-primary [&_a]:underline [&_h2]:mt-8 [&_h2]:font-display [&_h2]:text-xl [&_h2]:uppercase [&_h2]:tracking-wide [&_strong]:font-semibold [&_strong]:text-foreground">
         <h2>About these terms</h2>
         <p>
-          This website is operated by {COMPANY}, of <strong>[REGISTERED ADDRESS]</strong>, company
-          number <strong>[COMPANY NUMBER]</strong>. By using <strong>[DOMAIN]</strong> you agree to
+          This website is operated by {COMPANY. By using <strong>[DOMAIN]</strong> you agree to
           these terms. If you do not agree with them, please do not use the site.
         </p>
         <p>
