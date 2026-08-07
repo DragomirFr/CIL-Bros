@@ -27,13 +27,8 @@ function PrivacyPage() {
       <div className="prose prose-sm mt-8 max-w-none space-y-6 text-foreground [&_a]:text-primary [&_a]:underline [&_h2]:mt-8 [&_h2]:font-display [&_h2]:text-xl [&_h2]:uppercase [&_h2]:tracking-wide [&_strong]:font-semibold [&_strong]:text-foreground">
         <h2>Who we are</h2>
         <p>
-          {COMPANY}, of <strong>[REGISTERED ADDRESS]</strong>, company number{" "}
-          <strong>[COMPANY NUMBER]</strong>, is the data controller for personal data collected via
+          {COMPANY}, is the data controller for personal data collected via
           this website. You can reach us at <a href={`mailto:${EMAIL}`}>{EMAIL}</a>.
-        </p>
-        <p>
-          We are registered with the Information Commissioner's Office (ICO), registration number{" "}
-          <strong>[ICO REGISTRATION NUMBER]</strong>.
         </p>
 
         <h2>What personal data we collect</h2>
