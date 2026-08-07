@@ -8,6 +8,9 @@ import siteVideoTwo from "@/assets/att.doOE4iqsHqd8oW9d_aNhkSc_QMRrGy17CSICuoL2Z
 import siteVideoThree from "@/assets/att.7rfcVRnlu6lLY5zuMUUGBOszDFhCbdrznVKPihPvM-4.mp4";
 import siteVideoFour from "@/assets/att.U8PF3uejMWXDX61lmjwLsFGPnekzeCkl8YNpfwb-0jw.mp4";
 import siteVideoFive from "@/assets/att.-Uer7IrDT4p-ytbJ6VpgKBnB4_iUzyb1qLyKyy5N7rE.mp4";
+import beams from "@/assets/beams.jpg";
+import insulation from "@/assets/insulation.jpg";
+import powerfloating from "@/assets/power-floating.png";
 
 export const COMPANY = "CIL Bros Construction";
 export const PHONE = "0751585001";
@@ -82,7 +85,7 @@ export const galleryItems: GalleryItem[] = [
   {
     src: powerFloatingReal,
     alt: "Concrete slab being power floated on a construction site",
-    caption: "Power floating - Northamptonshire",
+    caption: "Northamptonshire",
   },
   {
     src: concreteFlooringFinish,
@@ -125,14 +128,14 @@ export const services: Service[] = [
     slug: "beams",
     title: "Beams",
     text: "Reliable steel beam installation for structural openings, extensions and renovation work.",
-    image: powerFloatingReal,
+    image: beams,
   },
   {
     n: "03",
     slug: "insulation",
     title: "Insulation",
     text: "Practical insulation solutions fitted to help improve comfort, efficiency and compliance.",
-    image: concreteFlooringFinish,
+    image: insulation,
   },
   {
     n: "04",
@@ -146,7 +149,7 @@ export const services: Service[] = [
     slug: "power-floating",
     title: "Power Floating",
     text: "Machine-finished concrete surfaces for a smooth, hard-wearing result built to last.",
-    image: powerFloatingReal,
+    image: powerfloating,
   },
 ];
 
