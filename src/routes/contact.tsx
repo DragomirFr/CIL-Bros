@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 
-import { BASE_LOCATION, COMPANY, EMAIL, PHONE, PHONE_HREF, areas } from "@/data/site";
+import { BASE_LOCATION, COMPANY, EMAIL, PHONE, PHONE_HREF } from "@/data/site";
 
 export const Route = createFileRoute("/contact")({
   component: ContactPage,
@@ -84,19 +84,6 @@ function ContactPage() {
           <p className="mt-3 text-sm text-muted-foreground">
             Site visits across the county and just beyond.
           </p>
-        </div>
-        <div className="bg-card p-8">
-          <p className="text-xs font-bold tracking-[0.2em] text-primary uppercase">Areas covered</p>
-          <ul className="mt-3 flex flex-wrap gap-2">
-            {areas.map((a) => (
-              <li
-                key={a.slug}
-                className="border border-border px-3 py-1.5 text-xs font-bold tracking-[0.1em] uppercase"
-              >
-                {a.name}
-              </li>
-            ))}
-          </ul>
         </div>
       </div>
     </section>
