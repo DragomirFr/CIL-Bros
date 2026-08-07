@@ -26,8 +26,9 @@ function TermsPage() {
       <div className="prose prose-sm mt-8 max-w-none space-y-6 text-foreground [&_a]:text-primary [&_a]:underline [&_h2]:mt-8 [&_h2]:font-display [&_h2]:text-xl [&_h2]:uppercase [&_h2]:tracking-wide [&_strong]:font-semibold [&_strong]:text-foreground">
         <h2>About these terms</h2>
         <p>
-          This website is operated by CIL Bros Construction LTD. By using <strong>cilbrosconstruction.com</strong> you agree to
-          these terms. If you do not agree with them, please do not use the site.
+          This website is operated by CIL Bros Construction LTD. By using{" "}
+          <strong>cilbrosconstruction.com</strong> you agree to these terms. If you do not agree
+          with them, please do not use the site.
         </p>
         <p>
           These terms cover your use of the website. The building work itself is governed by the

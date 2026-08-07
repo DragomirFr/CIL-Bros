@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 
-import { BASE_LOCATION, COMPANY, EMAIL, PHONE, PHONE_HREF } from "@/data/site";
+import { BASE_LOCATION, COMPANY, EMAIL, PHONE, PHONE_E164, PHONE_HREF } from "@/data/site";
 
 export const Route = createFileRoute("/contact")({
   component: ContactPage,
@@ -31,7 +31,7 @@ export const Route = createFileRoute("/contact")({
           mainEntity: {
             "@type": "GeneralContractor",
             name: COMPANY,
-            telephone: PHONE,
+            telephone: PHONE_E164,
             email: EMAIL,
             address: {
               "@type": "PostalAddress",
@@ -62,9 +62,7 @@ function ContactPage() {
           <a href={PHONE_HREF} className="mt-3 block font-display text-2xl hover:text-primary">
             {PHONE}
           </a>
-          <p className="mt-3 text-sm text-muted-foreground">
-            Quickest way to reach us.
-          </p>
+          <p className="mt-3 text-sm text-muted-foreground">Quickest way to reach us.</p>
         </div>
         <div className="bg-card p-8">
           <p className="text-xs font-bold tracking-[0.2em] text-primary uppercase">Email</p>

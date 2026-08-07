@@ -26,10 +26,12 @@ export function MediaGallery({ items }: { items: GalleryItem[] }) {
               >
                 <span className="block aspect-[4/3]">
                   {video && !item.poster ? (
-                    // No poster given, so let the browser paint the first frame.
+                    // No poster given, so let the browser paint the first frame:
+                    // `metadata` plus the `#t=0.1` fragment seeks one frame instead
+                    // of downloading every video in the grid up front.
                     <video
-                      src={item.src}
-                      preload="auto"
+                      src={`${item.src}#t=0.1`}
+                      preload="metadata"
                       muted
                       playsInline
                       tabIndex={-1}

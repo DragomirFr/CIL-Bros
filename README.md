@@ -24,14 +24,14 @@ npm run dev      # http://localhost:8080
 
 ## Scripts
 
-| Script | Does |
-| --- | --- |
-| `npm run dev` | Start the dev server |
-| `npm run build` | Production build |
+| Script              | Does                                    |
+| ------------------- | --------------------------------------- |
+| `npm run dev`       | Start the dev server                    |
+| `npm run build`     | Production build                        |
 | `npm run build:dev` | Debug build (readable names, dev React) |
-| `npm run preview` | Preview the production build |
-| `npm run lint` | ESLint |
-| `npm run format` | Prettier |
+| `npm run preview`   | Preview the production build            |
+| `npm run lint`      | ESLint                                  |
+| `npm run format`    | Prettier                                |
 
 ## Layout
 
@@ -48,9 +48,14 @@ edit there rather than in individual pages.
 
 ## Before going live
 
-Some values are still placeholders:
+Still outstanding:
 
-- `src/routes/privacy.tsx`, `terms.tsx`, `cookies.tsx` — search for `[` to find
-  `[REGISTERED ADDRESS]`, `[COMPANY NUMBER]`, `[ICO REGISTRATION NUMBER]`, `[DOMAIN]`
-- `src/data/site.ts` — `PHONE` / `PHONE_HREF` are dummy numbers
-- `src/routes/sitemap[.]xml.ts` — `BASE_URL` needs the live domain
+- `src/routes/privacy.tsx` — no data-retention section, and the data controller
+  has no registered address or company number (both required under UK GDPR
+  Article 13)
+- No `og:image`, so shared links render without a preview image. `index.tsx`
+  declares `twitter:card: summary_large_image` and needs one
+- `og:url` values are page-relative; Open Graph requires absolute URLs
+- The gallery lightbox has no next/prev — `gallery.index.tsx` tells users they
+  can swipe or use arrows, and they can't
+- Company name appears as both "CIL Bros Construction" and "... Ltd"; pick one

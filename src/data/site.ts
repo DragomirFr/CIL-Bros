@@ -13,9 +13,11 @@ import insulation from "@/assets/insulation.jpg";
 import powerfloating from "@/assets/power-floating.png";
 
 export const COMPANY = "CIL Bros Construction";
-export const PHONE = "0751585001";
-export const PHONE_HREF = "tel:0751585001";
-export const EMAIL = "contact@cilbroconstruction.com";
+export const PHONE = "07510 585001";
+export const PHONE_HREF = "tel:+447510585001";
+/** E.164 form. Google wants the country code for a local business listing. */
+export const PHONE_E164 = "+44 7510 585001";
+export const EMAIL = "contact@cilbrosconstruction.com";
 export const BASE_LOCATION = "Northampton, Northamptonshire";
 export const FACEBOOK_URL = "https://www.facebook.com/profile.php?id=61589360498625";
 

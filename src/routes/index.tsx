@@ -3,7 +3,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   COMPANY,
   EMAIL,
-  PHONE,
+  PHONE_E164,
   areas,
   galleryItems,
   isVideo,
@@ -41,7 +41,7 @@ export const Route = createFileRoute("/")({
           name: COMPANY,
           description:
             "Extensions, renovations, groundworks and brickwork by a family-run team near Northampton.",
-          telephone: PHONE,
+          telephone: PHONE_E164,
           email: EMAIL,
           address: {
             "@type": "PostalAddress",
@@ -163,9 +163,13 @@ function Index() {
                   className="overflow-hidden border border-secondary-foreground/15"
                 >
                   {video.src ? (
+                    // `preload="auto"` here pulled all three files (~17 MB) on every
+                    // homepage visit. `metadata` fetches only the header, and the
+                    // `#t=0.1` fragment makes the browser seek that one frame so the
+                    // tile still shows a still instead of an empty box.
                     <video
                       className="aspect-video w-full object-cover"
-                      src={video.src}
+                      src={`${video.src}#t=0.1`}
                       controls
                       muted
                       controlsList="nodownload noremoteplayback novolume"
@@ -176,7 +180,7 @@ function Index() {
                       }}
                       loop
                       playsInline
-                      preload="auto"
+                      preload="metadata"
                     />
                   ) : (
                     <div className="flex aspect-video items-center justify-center bg-secondary-foreground/5 px-5 text-center">
