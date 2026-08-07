@@ -22,7 +22,7 @@ function PrivacyPage() {
   return (
     <article className="mx-auto max-w-3xl px-5 pt-32 pb-20 sm:pb-28">
       <h1 className="font-display text-3xl uppercase sm:text-4xl">Privacy Policy</h1>
-      <p className="mt-3 text-sm text-muted-foreground">Last updated: 6 August 2026</p>
+      <p className="mt-3 text-sm text-muted-foreground">Last updated: 7 August 2026</p>
 
       <div className="prose prose-sm mt-8 max-w-none space-y-6 text-foreground [&_a]:text-primary [&_a]:underline [&_h2]:mt-8 [&_h2]:font-display [&_h2]:text-xl [&_h2]:uppercase [&_h2]:tracking-wide [&_strong]:font-semibold [&_strong]:text-foreground">
         <h2>Who we are</h2>
