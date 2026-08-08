@@ -70,7 +70,7 @@ function Index() {
             your build depends on.
           </h1>
           <p className="mt-6 max-w-2xl text-base text-secondary-foreground/75 sm:text-lg">
-            Specialists in blockwork, steel beams, insulation, concrete flooring and power floating.
+            Specialists in blocks, beams, insulation, concrete flooring and power floating.
           </p>
           <div className="mt-9 flex flex-wrap justify-center gap-3">
             <Link

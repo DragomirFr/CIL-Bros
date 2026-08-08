@@ -122,14 +122,14 @@ export const services: Service[] = [
     n: "01",
     slug: "blocks",
     title: "Blocks",
-    text: "Accurate blockwork for foundations, walls and structural builds, laid cleanly and to specification.",
+    text: "Infill blocks laid between the beams to form a solid, level floor, set cleanly and to specification.",
     image: groundworksFoundation,
   },
   {
     n: "02",
     slug: "beams",
     title: "Beams",
-    text: "Reliable steel beam installation for structural openings, extensions and renovation work.",
+    text: "Beams supplied, set and levelled to specification for solid structural support.",
     image: beams,
   },
   {
