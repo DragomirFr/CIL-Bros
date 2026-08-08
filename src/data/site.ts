@@ -129,7 +129,7 @@ export const services: Service[] = [
     n: "02",
     slug: "beams",
     title: "Beams",
-    text: "Beams supplied, set and levelled to specification for solid structural support.",
+    text: "Beams set and levelled to specification for solid structural support.",
     image: beams,
   },
   {
