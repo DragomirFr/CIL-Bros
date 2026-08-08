@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { ChevronRight, Menu, Phone } from "lucide-react";
+import { ChevronRight, Mail, Menu, Phone } from "lucide-react";
 import { useState } from "react";
 
 import logo from "@/assets/logo-transparent.png";
@@ -97,7 +97,11 @@ function MobileNav() {
                   params={{ slug: service.slug }}
                   onClick={close}
                   activeProps={{ className: "border-primary bg-primary/10 text-primary" }}
-                  className="flex min-h-20 flex-col justify-between rounded-xl border border-secondary-foreground/10 bg-secondary/40 p-3 text-left text-secondary-foreground/80 transition-colors hover:border-primary/30 hover:bg-primary/5 hover:text-primary min-[360px]:min-h-24"
+                  // odd:last: five services leaves the final tile alone in its
+                  // row, so let it run the full width rather than sit next to a
+                  // gap. Keyed off position, not a hardcoded count, so it stays
+                  // right if a service is added or removed.
+                  className="flex min-h-20 flex-col justify-between rounded-xl border border-secondary-foreground/10 bg-secondary/40 p-3 text-left text-secondary-foreground/80 transition-colors odd:last:col-span-2 hover:border-primary/30 hover:bg-primary/5 hover:text-primary min-[360px]:min-h-24"
                 >
                   <span className="text-[0.65rem] font-bold tracking-[0.18em] text-primary uppercase">
                     {service.n}
@@ -121,6 +125,14 @@ function MobileNav() {
             <p className="mt-2 text-xs leading-relaxed text-secondary-foreground/60">
               Open the menu for services and pages, or tap to call now.
             </p>
+            <a
+              href={`mailto:${EMAIL}`}
+              onClick={close}
+              className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-xl border border-secondary-foreground/15 px-4 py-2.5 text-xs font-bold tracking-[0.12em] text-secondary-foreground/75 uppercase transition-colors hover:border-primary/40 hover:text-primary"
+            >
+              <Mail className="h-4 w-4" />
+              Email us
+            </a>
           </div>
           </div>
         </nav>
