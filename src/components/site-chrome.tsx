@@ -56,9 +56,9 @@ function MobileNav() {
       </SheetTrigger>
       <SheetContent
         side="right"
-        className="flex h-[100svh] w-screen flex-col overflow-hidden border-secondary-foreground/10 bg-secondary p-0 text-secondary-foreground sm:w-[24rem] [&>button]:top-5 [&>button]:right-5 [&>button]:text-secondary-foreground/70 [&>button]:hover:text-primary"
+        className="flex h-[100dvh] max-h-[100dvh] w-full max-w-full flex-col overflow-hidden border-secondary-foreground/10 bg-secondary p-0 pb-[env(safe-area-inset-bottom)] text-secondary-foreground sm:w-[24rem] [&>button]:top-[calc(1.25rem+env(safe-area-inset-top))] [&>button]:right-5 [&>button]:text-secondary-foreground/70 [&>button]:hover:text-primary"
       >
-        <div className="shrink-0 border-b border-secondary-foreground/10 px-6 pb-4 pt-14">
+        <div className="shrink-0 border-b border-secondary-foreground/10 px-5 pb-4 pt-[calc(3.5rem+env(safe-area-inset-top))] sm:px-6">
           <SheetTitle className="text-xs font-bold tracking-[0.2em] text-primary uppercase">
             Menu
           </SheetTitle>
@@ -67,7 +67,8 @@ function MobileNav() {
           </p>
         </div>
 
-        <nav className="flex min-h-0 flex-1 flex-col gap-4 px-4 py-4 sm:px-6">
+        <nav className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 py-4 sm:px-6">
+          <div className="flex flex-col gap-4">
           <div className="grid grid-cols-1 gap-2">
             {nav.map((n) => (
               <Link
@@ -88,7 +89,7 @@ function MobileNav() {
             <p className="px-2 text-[0.65rem] font-bold tracking-[0.2em] text-primary uppercase">
               Services
             </p>
-            <div className="mt-2 grid grid-cols-2 gap-2">
+            <div className="mt-2 grid grid-cols-2 gap-2 min-[360px]:gap-2.5">
               {services.map((service) => (
                 <Link
                   key={service.slug}
@@ -96,7 +97,7 @@ function MobileNav() {
                   params={{ slug: service.slug }}
                   onClick={close}
                   activeProps={{ className: "border-primary bg-primary/10 text-primary" }}
-                  className="flex min-h-24 flex-col justify-between rounded-xl border border-secondary-foreground/10 bg-secondary/40 p-3 text-left text-secondary-foreground/80 transition-colors hover:border-primary/30 hover:bg-primary/5 hover:text-primary"
+                  className="flex min-h-20 flex-col justify-between rounded-xl border border-secondary-foreground/10 bg-secondary/40 p-3 text-left text-secondary-foreground/80 transition-colors hover:border-primary/30 hover:bg-primary/5 hover:text-primary min-[360px]:min-h-24"
                 >
                   <span className="text-[0.65rem] font-bold tracking-[0.18em] text-primary uppercase">
                     {service.n}
@@ -120,6 +121,7 @@ function MobileNav() {
             <p className="mt-2 text-xs leading-relaxed text-secondary-foreground/60">
               Open the menu for services and pages, or tap to call now.
             </p>
+          </div>
           </div>
         </nav>
 
