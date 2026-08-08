@@ -69,71 +69,71 @@ function MobileNav() {
 
         <nav className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 py-4 sm:px-6">
           <div className="flex flex-col gap-4">
-          <div className="grid grid-cols-1 gap-2">
-            {nav.map((n) => (
-              <Link
-                key={n.to}
-                to={n.to}
-                onClick={close}
-                activeOptions={{ exact: n.to === "/" }}
-                activeProps={{ className: "border-primary bg-primary/10 text-primary" }}
-                className="flex items-center justify-between rounded-xl border border-secondary-foreground/10 bg-secondary/40 px-4 py-3 text-sm font-display tracking-[0.08em] uppercase transition-colors hover:border-primary/30 hover:bg-primary/5 hover:text-primary"
-              >
-                <span>{n.label}</span>
-                <ChevronRight className="h-4 w-4 shrink-0 opacity-60" />
-              </Link>
-            ))}
-          </div>
-
-          <div>
-            <p className="px-2 text-[0.65rem] font-bold tracking-[0.2em] text-primary uppercase">
-              Services
-            </p>
-            <div className="mt-2 grid grid-cols-2 gap-2 min-[360px]:gap-2.5">
-              {services.map((service) => (
+            <div className="grid grid-cols-1 gap-2">
+              {nav.map((n) => (
                 <Link
-                  key={service.slug}
-                  to="/services/$slug"
-                  params={{ slug: service.slug }}
+                  key={n.to}
+                  to={n.to}
                   onClick={close}
+                  activeOptions={{ exact: n.to === "/" }}
                   activeProps={{ className: "border-primary bg-primary/10 text-primary" }}
-                  // odd:last: five services leaves the final tile alone in its
-                  // row, so let it run the full width rather than sit next to a
-                  // gap. Keyed off position, not a hardcoded count, so it stays
-                  // right if a service is added or removed.
-                  className="flex min-h-20 flex-col justify-between rounded-xl border border-secondary-foreground/10 bg-secondary/40 p-3 text-left text-secondary-foreground/80 transition-colors odd:last:col-span-2 hover:border-primary/30 hover:bg-primary/5 hover:text-primary min-[360px]:min-h-24"
+                  className="flex items-center justify-between rounded-xl border border-secondary-foreground/10 bg-secondary/40 px-4 py-3 text-sm font-display tracking-[0.08em] uppercase transition-colors hover:border-primary/30 hover:bg-primary/5 hover:text-primary"
                 >
-                  <span className="text-[0.65rem] font-bold tracking-[0.18em] text-primary uppercase">
-                    {service.n}
-                  </span>
-                  <span className="pr-2 text-sm leading-tight">{service.title}</span>
+                  <span>{n.label}</span>
+                  <ChevronRight className="h-4 w-4 shrink-0 opacity-60" />
                 </Link>
               ))}
             </div>
-          </div>
 
-          <div className="rounded-2xl border border-secondary-foreground/10 bg-secondary/40 p-3">
-            <p className="text-xs font-bold tracking-[0.2em] text-primary uppercase">Contact</p>
-            <a
-              href={PHONE_HREF}
-              onClick={close}
-              className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 text-sm font-bold tracking-[0.12em] text-primary-foreground uppercase transition-colors hover:bg-primary/85"
-            >
-              <Phone className="h-4 w-4" />
-              Call {PHONE}
-            </a>
-            <p className="mt-2 text-xs leading-relaxed text-secondary-foreground/60">
-              Open the menu for services and pages, or tap to call now.
-            </p>
-            <a
-              href={`mailto:${EMAIL}`}
-              onClick={close}
-              className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-xl border border-secondary-foreground/15 px-4 py-2.5 text-xs font-bold tracking-[0.12em] text-secondary-foreground/75 uppercase transition-colors hover:border-primary/40 hover:text-primary"
-            >
-              <Mail className="h-4 w-4" />
-              Email us
-            </a>
-          </div>
+            <div>
+              <p className="px-2 text-[0.65rem] font-bold tracking-[0.2em] text-primary uppercase">
+                Services
+              </p>
+              <div className="mt-2 grid grid-cols-2 gap-2 min-[360px]:gap-2.5">
+                {services.map((service) => (
+                  <Link
+                    key={service.slug}
+                    to="/services/$slug"
+                    params={{ slug: service.slug }}
+                    onClick={close}
+                    activeProps={{ className: "border-primary bg-primary/10 text-primary" }}
+                    // odd:last: five services leaves the final tile alone in its
+                    // row, so let it run the full width rather than sit next to a
+                    // gap. Keyed off position, not a hardcoded count, so it stays
+                    // right if a service is added or removed.
+                    className="flex min-h-20 flex-col justify-between rounded-xl border border-secondary-foreground/10 bg-secondary/40 p-3 text-left text-secondary-foreground/80 transition-colors odd:last:col-span-2 hover:border-primary/30 hover:bg-primary/5 hover:text-primary min-[360px]:min-h-24"
+                  >
+                    <span className="text-[0.65rem] font-bold tracking-[0.18em] text-primary uppercase">
+                      {service.n}
+                    </span>
+                    <span className="pr-2 text-sm leading-tight">{service.title}</span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            <div className="rounded-2xl border border-secondary-foreground/10 bg-secondary/40 p-3">
+              <p className="text-xs font-bold tracking-[0.2em] text-primary uppercase">Contact</p>
+              <a
+                href={PHONE_HREF}
+                onClick={close}
+                className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 text-sm font-bold tracking-[0.12em] text-primary-foreground uppercase transition-colors hover:bg-primary/85"
+              >
+                <Phone className="h-4 w-4" />
+                Call {PHONE}
+              </a>
+              <p className="mt-2 text-xs leading-relaxed text-secondary-foreground/60">
+                Open the menu for services and pages, or tap to call now.
+              </p>
+              <a
+                href={`mailto:${EMAIL}`}
+                onClick={close}
+                className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-xl border border-secondary-foreground/15 px-4 py-2.5 text-xs font-bold tracking-[0.12em] text-secondary-foreground/75 uppercase transition-colors hover:border-primary/40 hover:text-primary"
+              >
+                <Mail className="h-4 w-4" />
+                Email us
+              </a>
+            </div>
           </div>
         </nav>
 
