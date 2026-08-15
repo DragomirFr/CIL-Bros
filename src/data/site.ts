@@ -8,6 +8,10 @@ import siteVideoTwo from "@/assets/att.doOE4iqsHqd8oW9d_aNhkSc_QMRrGy17CSICuoL2Z
 import siteVideoThree from "@/assets/att.7rfcVRnlu6lLY5zuMUUGBOszDFhCbdrznVKPihPvM-4.mp4";
 import siteVideoFour from "@/assets/att.U8PF3uejMWXDX61lmjwLsFGPnekzeCkl8YNpfwb-0jw.mp4";
 import siteVideoFive from "@/assets/att.-Uer7IrDT4p-ytbJ6VpgKBnB4_iUzyb1qLyKyy5N7rE.mp4";
+import recentJobOne from "@/assets/recent1.mp4";
+import recentJobTwo from "@/assets/recent2.mp4";
+import recentJobThree from "@/assets/recent3.mp4";
+import recentJobFour from "@/assets/recent4.mp4";
 import beams from "@/assets/beams.jpg";
 import insulation from "@/assets/insulation.jpg";
 import powerfloating from "@/assets/power-floating.png";
@@ -94,6 +98,32 @@ export const galleryItems: GalleryItem[] = [
     alt: "Finished concrete floor with a smooth, even surface",
     caption: "Concrete flooring - Northamptonshire",
   },
+];
+
+/**
+ * A job shown in the "Recent Jobs" section on the home page.
+ *
+ * The grid shows one tile per entry, so add or remove entries and the section
+ * follows. To add one: import the file at the top of this file and drop an
+ * entry in `recentJobs` below. Videos are picked up from the file extension,
+ * same as the gallery.
+ */
+export interface RecentJob {
+  /** Identifies the entry in code. Not shown on the page. */
+  title: string;
+  /** Imported image or video. */
+  src: string;
+  /** Describes the item for screen readers. Falls back to the title. */
+  alt?: string;
+  /** Videos only: still frame shown before playback. */
+  poster?: string;
+}
+
+export const recentJobs: RecentJob[] = [
+  { title: "Recent job 1", src: recentJobOne, alt: "Video from a recent CIL Bros job" },
+  { title: "Recent job 2", src: recentJobTwo, alt: "Video from a recent CIL Bros job" },
+  { title: "Recent job 3", src: recentJobThree, alt: "Video from a recent CIL Bros job" },
+  { title: "Recent job 4", src: recentJobFour, alt: "Video from a recent CIL Bros job" },
 ];
 
 export interface SiteVideo {

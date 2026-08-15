@@ -7,8 +7,10 @@ import {
   areas,
   galleryItems,
   isVideo,
+  recentJobs,
   services,
   siteVideos,
+  type RecentJob,
 } from "@/data/site";
 
 export const Route = createFileRoute("/")({
@@ -204,6 +206,35 @@ function Index() {
         </div>
       </section>
 
+      <section id="recent-jobs" className="bg-[#3c3732] py-20 sm:py-28">
+        <div className="mx-auto max-w-6xl px-5">
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <p className="text-xs font-bold tracking-[0.2em] text-primary uppercase">
+                Straight off site
+              </p>
+              <h2 className="mt-3 font-display text-2xl text-secondary-foreground uppercase sm:text-4xl">
+                Recent Jobs
+              </h2>
+            </div>
+            <Link
+              to="/contact"
+              className="text-xs font-bold tracking-[0.15em] text-primary uppercase hover:underline"
+            >
+              Get a quote
+            </Link>
+          </div>
+          <p className="mt-5 max-w-2xl text-sm leading-relaxed text-secondary-foreground/70 sm:text-base">
+            Photos and video from jobs we have finished recently across Northamptonshire.
+          </p>
+          <div className="mt-10 grid grid-cols-2 gap-4 lg:grid-cols-4">
+            {recentJobs.map((job, index) => (
+              <RecentJobTile key={`${job.title}-${index}`} job={job} />
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="bg-secondary py-20 sm:py-28">
         <div className="mx-auto grid max-w-6xl items-center gap-14 px-5 lg:grid-cols-[.9fr_1.1fr]">
           <div>
@@ -271,6 +302,44 @@ function Index() {
         </div>
       </section>
     </>
+  );
+}
+
+/**
+ * One tile in the Recent Jobs grid — media only, no caption. The box is 9:16
+ * because the clips are shot on a phone; `object-cover` fills it either way.
+ */
+function RecentJobTile({ job }: { job: RecentJob }) {
+  return (
+    <article className="overflow-hidden border border-secondary-foreground/15 bg-secondary/40">
+      {isVideo(job.src) ? (
+        // Same trick as "On site with us": `metadata` plus the `#t=0.1`
+        // fragment paints one frame instead of pulling the whole file.
+        <video
+          className="aspect-[9/16] w-full object-cover"
+          src={`${job.src}#t=0.1`}
+          poster={job.poster}
+          controls
+          muted
+          controlsList="nodownload noremoteplayback novolume"
+          disablePictureInPicture
+          onVolumeChange={(event) => {
+            event.currentTarget.muted = true;
+            event.currentTarget.volume = 0;
+          }}
+          loop
+          playsInline
+          preload="metadata"
+        />
+      ) : (
+        <img
+          src={job.src}
+          alt={job.alt ?? job.title}
+          loading="lazy"
+          className="aspect-[9/16] w-full object-cover"
+        />
+      )}
+    </article>
   );
 }
 
