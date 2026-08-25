@@ -4,6 +4,7 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useRouterState,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
@@ -133,14 +134,20 @@ function RootShell({ children }: { children: ReactNode }) {
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
+  // The admin area brings its own navigation, so the public header and footer
+  // stay out of the way there.
+  const isAdmin = useRouterState({
+    select: (state) => state.location.pathname.startsWith("/admin"),
+  });
+
   return (
     <QueryClientProvider client={queryClient}>
-      <SiteHeader />
+      {isAdmin ? null : <SiteHeader />}
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <main className="page-shell min-h-screen bg-background font-sans text-foreground">
         <Outlet />
       </main>
-      <SiteFooter />
+      {isAdmin ? null : <SiteFooter />}
     </QueryClientProvider>
   );
 }

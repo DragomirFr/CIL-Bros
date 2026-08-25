@@ -1,9 +1,27 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 
-import { COMPANY, PHONE, PHONE_HREF, services } from "@/data/site";
+import { COMPANY, PHONE, PHONE_HREF, type Service } from "@/data/site";
+import { getSectionItems, useServices } from "@/lib/site-content";
+
+/**
+ * The services this page can be served for.
+ *
+ * On the server that is a REST read of the published row, so a service
+ * added in the admin area gets a real page with real meta tags instead of a 404.
+ * In the browser the live store already holds them — the header renders from it
+ * on every page — so no round trip is needed. The dynamic import keeps the
+ * server-side reader out of the client bundle.
+ */
+async function loadServices(): Promise<Service[]> {
+  if (!import.meta.env.SSR) return getSectionItems("services");
+
+  const { fetchSectionItems } = await import("@/lib/site-content-server");
+  return fetchSectionItems("services");
+}
 
 export const Route = createFileRoute("/services/$slug")({
-  loader: ({ params }) => {
+  loader: async ({ params }) => {
+    const services = await loadServices();
     const service = services.find((item) => item.slug === params.slug);
     if (!service) throw notFound();
     return { service };
@@ -31,7 +49,12 @@ export const Route = createFileRoute("/services/$slug")({
 });
 
 function ServicePage() {
-  const { service } = Route.useLoaderData();
+  const { service: loaded } = Route.useLoaderData();
+
+  // Prefer the live copy, so an edit in the admin area shows up here without a
+  // reload. The loaded copy covers the first paint and the server render.
+  const live = useServices().find((item) => item.slug === loaded.slug);
+  const service = live ?? loaded;
 
   return (
     <>
@@ -79,7 +102,7 @@ function ServicePage() {
                 <div>
                   <p className="font-display text-lg uppercase">Service image</p>
                   <p className="mt-2 text-sm text-muted-foreground">
-                    Add a photo for this service in the site data when it is ready.
+                    Add a photo for this service from the website admin when one is ready.
                   </p>
                 </div>
               </div>
