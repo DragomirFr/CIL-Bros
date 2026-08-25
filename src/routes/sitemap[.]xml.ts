@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
 
-import { services } from "@/data/site";
+import { fetchSectionItems } from "@/lib/site-content-server";
 
 const BASE_URL = "https://cilbrosconstruction.com";
 
@@ -15,6 +15,11 @@ export const Route = createFileRoute("/sitemap.xml")({
   server: {
     handlers: {
       GET: async () => {
+        // Published services, so adding or renaming one in the admin area keeps
+        // the sitemap honest. Falls back to the bundled list if Supabase is
+        // unreachable.
+        const services = await fetchSectionItems("services");
+
         const entries: SitemapEntry[] = [
           { path: "/", changefreq: "weekly", priority: "1.0" },
           { path: "/gallery", changefreq: "monthly", priority: "0.8" },

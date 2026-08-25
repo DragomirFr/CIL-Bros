@@ -16,9 +16,19 @@ dist-ssr
 .nitro
 *.local
 
+# Local env files. The Supabase URL and anon key are not secrets, but the file
+# is per-machine — keep the checked-in copy in .env.example instead.
+.env
+.env.*
+!.env.example
+
 # Wrangler / Cloudflare
 .wrangler/
 .dev.vars
+
+# Supabase CLI
+.branches/
+.temp/
 
 # Editor directories and files
 .vscode/*

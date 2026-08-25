@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { MediaGallery } from "@/components/media-gallery";
-import { galleryItems } from "@/data/site";
+import { useGalleryItems } from "@/lib/site-content";
 
 export const Route = createFileRoute("/gallery/")({
   component: GalleryIndex,
@@ -26,6 +26,8 @@ export const Route = createFileRoute("/gallery/")({
 });
 
 function GalleryIndex() {
+  const items = useGalleryItems();
+
   return (
     <section className="mx-auto max-w-6xl px-5 pt-32 pb-20 sm:pb-28">
       <p className="text-xs font-bold tracking-[0.3em] text-primary uppercase">Gallery</p>
@@ -34,8 +36,14 @@ function GalleryIndex() {
         Photos and video from jobs around Northamptonshire. Tap any one to open it, then swipe or
         use the arrows to move through the rest.
       </p>
-
-      <MediaGallery items={galleryItems} />
+      {items.length > 0 ? (
+        <MediaGallery items={items} />
+      ) : (
+        <p className="mt-12 border border-dashed border-border bg-muted px-5 py-12 text-center text-sm text-muted-foreground">
+          New photos are on their way. Give us a call in the meantime and we will talk you through
+          similar jobs we have finished.
+        </p>
+      )}{" "}
     </section>
   );
 }

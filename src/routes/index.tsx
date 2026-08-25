@@ -1,17 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 
-import {
-  COMPANY,
-  EMAIL,
-  PHONE_E164,
-  areas,
-  galleryItems,
-  isVideo,
-  recentJobs,
-  services,
-  siteVideos,
-  type RecentJob,
-} from "@/data/site";
+import { COMPANY, EMAIL, PHONE_E164, areas, isVideoItem, type RecentJob } from "@/data/site";
+import { useGalleryItems, useRecentJobs, useServices, useSiteVideos } from "@/lib/site-content";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -59,6 +49,14 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
+  const services = useServices();
+  const jobs = useRecentJobs();
+  const videos = useSiteVideos().slice(0, 3);
+  // Photos only here — the videos have their own strip below.
+  const photos = useGalleryItems()
+    .filter((item) => !isVideoItem(item))
+    .slice(0, 4);
+
   return (
     <>
       <section className="flex min-h-screen items-center bg-secondary text-center">
@@ -96,10 +94,12 @@ function Index() {
           <h2 className="font-display text-2xl text-secondary-foreground uppercase sm:text-4xl">
             What we do
           </h2>
-          <div className="mt-10 grid gap-px border border-border bg-border sm:grid-cols-2 lg:grid-cols-5">
+          <div
+            className={`mt-10 grid gap-px border border-border bg-border ${serviceGridClass(services.length)}`}
+          >
             {services.map((service) => (
               <Link
-                key={service.n}
+                key={service.slug}
                 to="/services/$slug"
                 params={{ slug: service.slug }}
                 className="group bg-card p-7 transition-colors hover:bg-background sm:p-9"
@@ -118,7 +118,13 @@ function Index() {
         </div>
       </section>
 
-      <section className="bg-secondary py-20 sm:py-28">
+      {/* Nothing published in either strip: skip the band rather than show a
+          heading over empty space. */}
+      <section
+        className={
+          photos.length === 0 && videos.length === 0 ? "hidden" : "bg-secondary py-20 sm:py-28"
+        }
+      >
         <div className="mx-auto max-w-6xl px-5">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <h2 className="font-display text-2xl text-secondary-foreground uppercase sm:text-4xl">
@@ -132,108 +138,114 @@ function Index() {
             </Link>
           </div>
           <div className="mt-10 grid gap-4 sm:grid-cols-2">
-            {galleryItems
-              .filter((item) => !isVideo(item.src))
-              .slice(0, 4)
-              .map((item) => (
-                <Link key={item.src} to="/gallery" className="group block overflow-hidden">
-                  <img
-                    src={item.src}
-                    alt={item.alt}
-                    width={1200}
-                    height={900}
-                    loading="lazy"
-                    className="h-64 w-full object-cover transition-transform duration-500 group-hover:scale-[1.03] sm:h-72"
-                  />
-                  {item.caption ? (
-                    <p className="mt-3 text-xs font-bold tracking-[0.15em] text-secondary-foreground/70 uppercase group-hover:text-primary">
-                      {item.caption}
-                    </p>
-                  ) : null}
-                </Link>
-              ))}
-          </div>
-
-          <div className="mt-16">
-            <h3 className="font-display text-xl text-secondary-foreground uppercase sm:text-2xl">
-              On site with us
-            </h3>
-            <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {siteVideos.slice(0, 3).map((video) => (
-                <div
-                  key={video.title}
-                  className="overflow-hidden border border-secondary-foreground/15"
-                >
-                  {video.src ? (
-                    // `preload="auto"` here pulled all three files (~17 MB) on every
-                    // homepage visit. `metadata` fetches only the header, and the
-                    // `#t=0.1` fragment makes the browser seek that one frame so the
-                    // tile still shows a still instead of an empty box.
-                    <video
-                      className="aspect-video w-full object-cover"
-                      src={`${video.src}#t=0.1`}
-                      controls
-                      muted
-                      controlsList="nodownload noremoteplayback novolume"
-                      disablePictureInPicture
-                      onVolumeChange={(event) => {
-                        event.currentTarget.muted = true;
-                        event.currentTarget.volume = 0;
-                      }}
-                      loop
-                      playsInline
-                      preload="metadata"
-                    />
-                  ) : (
-                    <div className="flex aspect-video items-center justify-center bg-secondary-foreground/5 px-5 text-center">
-                      <div>
-                        <p className="font-display text-sm text-secondary-foreground uppercase">
-                          {video.title}
-                        </p>
-                        <p className="mt-2 text-xs text-secondary-foreground/50">
-                          Add a video in site data
-                        </p>
-                      </div>
-                    </div>
-                  )}
-                  <p className="border-t border-secondary-foreground/15 px-4 py-3 text-xs font-bold tracking-[0.12em] text-secondary-foreground/70 uppercase">
-                    {video.title}
+            {photos.map((item, index) => (
+              <Link
+                key={`${item.src}-${index}`}
+                to="/gallery"
+                className="group block overflow-hidden"
+              >
+                <img
+                  src={item.src}
+                  alt={item.alt}
+                  width={1200}
+                  height={900}
+                  loading="lazy"
+                  className="h-64 w-full object-cover transition-transform duration-500 group-hover:scale-[1.03] sm:h-72"
+                />
+                {item.caption ? (
+                  <p className="mt-3 text-xs font-bold tracking-[0.15em] text-secondary-foreground/70 uppercase group-hover:text-primary">
+                    {item.caption}
                   </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="recent-jobs" className="bg-[#3c3732] py-20 sm:py-28">
-        <div className="mx-auto max-w-6xl px-5">
-          <div className="flex flex-wrap items-end justify-between gap-4">
-            <div>
-              <p className="text-xs font-bold tracking-[0.2em] text-primary uppercase">
-                Straight off site
-              </p>
-              <h2 className="mt-3 font-display text-2xl text-secondary-foreground uppercase sm:text-4xl">
-                Recent Jobs
-              </h2>
-            </div>
-            <Link
-              to="/contact"
-              className="text-xs font-bold tracking-[0.15em] text-primary uppercase hover:underline"
-            >
-              Get a quote
-            </Link>
-          </div>
-          <p className="mt-5 max-w-2xl text-sm leading-relaxed text-secondary-foreground/70 sm:text-base">
-            Photos and video from jobs we have finished recently across Northamptonshire.
-          </p>
-          <div className="mt-10 grid grid-cols-2 gap-4 lg:grid-cols-4">
-            {recentJobs.map((job, index) => (
-              <RecentJobTile key={`${job.title}-${index}`} job={job} />
+                ) : null}
+              </Link>
             ))}
           </div>
+
+          {videos.length > 0 ? (
+            <div className="mt-16">
+              <h3 className="font-display text-xl text-secondary-foreground uppercase sm:text-2xl">
+                On site with us
+              </h3>
+              <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {videos.map((video, index) => (
+                  <div
+                    key={`${video.title}-${index}`}
+                    className="overflow-hidden border border-secondary-foreground/15"
+                  >
+                    {video.src ? (
+                      // `preload="auto"` here pulled all three files (~17 MB) on every
+                      // homepage visit. `metadata` fetches only the header, and the
+                      // `#t=0.1` fragment makes the browser seek that one frame so the
+                      // tile still shows a still instead of an empty box.
+                      <video
+                        className="aspect-video w-full object-cover"
+                        src={`${video.src}#t=0.1`}
+                        poster={video.poster}
+                        controls
+                        muted
+                        controlsList="nodownload noremoteplayback novolume"
+                        disablePictureInPicture
+                        onVolumeChange={(event) => {
+                          event.currentTarget.muted = true;
+                          event.currentTarget.volume = 0;
+                        }}
+                        loop
+                        playsInline
+                        preload="metadata"
+                      />
+                    ) : (
+                      <div className="flex aspect-video items-center justify-center bg-secondary-foreground/5 px-5 text-center">
+                        <div>
+                          <p className="font-display text-sm text-secondary-foreground uppercase">
+                            {video.title}
+                          </p>
+                          <p className="mt-2 text-xs text-secondary-foreground/50">
+                            Add a video in the website admin
+                          </p>
+                        </div>
+                      </div>
+                    )}
+                    <p className="border-t border-secondary-foreground/15 px-4 py-3 text-xs font-bold tracking-[0.12em] text-secondary-foreground/70 uppercase">
+                      {video.title}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : null}
         </div>
       </section>
+
+      {jobs.length > 0 ? (
+        <section id="recent-jobs" className="bg-[#3c3732] py-20 sm:py-28">
+          <div className="mx-auto max-w-6xl px-5">
+            <div className="flex flex-wrap items-end justify-between gap-4">
+              <div>
+                <p className="text-xs font-bold tracking-[0.2em] text-primary uppercase">
+                  Straight off site
+                </p>
+                <h2 className="mt-3 font-display text-2xl text-secondary-foreground uppercase sm:text-4xl">
+                  Recent Jobs
+                </h2>
+              </div>
+              <Link
+                to="/contact"
+                className="text-xs font-bold tracking-[0.15em] text-primary uppercase hover:underline"
+              >
+                Get a quote
+              </Link>
+            </div>
+            <p className="mt-5 max-w-2xl text-sm leading-relaxed text-secondary-foreground/70 sm:text-base">
+              Photos and video from jobs we have finished recently across Northamptonshire.
+            </p>
+            <div className="mt-10 grid grid-cols-2 gap-4 lg:grid-cols-4">
+              {jobs.map((job, index) => (
+                <RecentJobTile key={`${job.title}-${index}`} job={job} />
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
 
       <section className="bg-secondary py-20 sm:py-28">
         <div className="mx-auto grid max-w-6xl items-center gap-14 px-5 lg:grid-cols-[.9fr_1.1fr]">
@@ -306,13 +318,25 @@ function Index() {
 }
 
 /**
+ * The tile grid follows however many services are published, so adding or
+ * removing one in the admin area doesn't leave a hole in the row.
+ */
+function serviceGridClass(count: number): string {
+  if (count <= 1) return "";
+  if (count === 2) return "sm:grid-cols-2";
+  if (count === 3) return "sm:grid-cols-2 lg:grid-cols-3";
+  if (count === 4) return "sm:grid-cols-2 lg:grid-cols-4";
+  return "sm:grid-cols-2 lg:grid-cols-5";
+}
+
+/**
  * One tile in the Recent Jobs grid — media only, no caption. The box is 9:16
  * because the clips are shot on a phone; `object-cover` fills it either way.
  */
 function RecentJobTile({ job }: { job: RecentJob }) {
   return (
     <article className="overflow-hidden border border-secondary-foreground/15 bg-secondary/40">
-      {isVideo(job.src) ? (
+      {isVideoItem(job) ? (
         // Same trick as "On site with us": `metadata` plus the `#t=0.1`
         // fragment paints one frame instead of pulling the whole file.
         <video

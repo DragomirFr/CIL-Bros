@@ -3,15 +3,8 @@ import { ChevronRight, Mail, Menu, Phone } from "lucide-react";
 import { useState } from "react";
 
 import logo from "@/assets/logo-transparent.png";
-import {
-  COMPANY,
-  EMAIL,
-  PHONE,
-  PHONE_HREF,
-  BASE_LOCATION,
-  FACEBOOK_URL,
-  services,
-} from "@/data/site";
+import { COMPANY, EMAIL, PHONE, PHONE_HREF, BASE_LOCATION, FACEBOOK_URL } from "@/data/site";
+import { useServices } from "@/lib/site-content";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 
 // Inline rather than from lucide-react: lucide has deprecated its brand icons
@@ -45,6 +38,7 @@ const legalNav = [
 function MobileNav() {
   const [open, setOpen] = useState(false);
   const close = () => setOpen(false);
+  const services = useServices();
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -195,6 +189,8 @@ export function SiteHeader() {
 }
 
 export function SiteFooter() {
+  const services = useServices();
+
   return (
     <footer className="site-footer border-t border-secondary-foreground/10 bg-secondary py-14">
       <div className="mx-auto grid max-w-6xl gap-10 px-5 sm:grid-cols-3">

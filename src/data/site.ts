@@ -43,13 +43,31 @@ export interface GalleryItem {
   caption?: string;
   /** Videos only: still frame shown before playback. */
   poster?: string;
+  /**
+   * Set by the admin area on upload. Bundled entries leave it off and get
+   * detected from the file extension instead — see `isVideoItem`.
+   */
+  kind?: MediaKind;
 }
+
+export type MediaKind = "image" | "video";
 
 /** Matches the video file types the gallery knows how to play. */
 export const VIDEO_FILE = /\.(mp4|webm|ogv|mov|m4v)(\?.*)?$/i;
 
 export function isVideo(src: string) {
   return VIDEO_FILE.test(src);
+}
+
+/**
+ * Whether an item should render as a video.
+ *
+ * Prefers the stored `kind`, because a Supabase Storage URL does not
+ * always end in the file extension. Falls back to sniffing the URL for the
+ * bundled entries, which do.
+ */
+export function isVideoItem(item: { src: string; kind?: MediaKind }) {
+  return item.kind ? item.kind === "video" : isVideo(item.src);
 }
 
 export const galleryItems: GalleryItem[] = [
@@ -117,6 +135,8 @@ export interface RecentJob {
   alt?: string;
   /** Videos only: still frame shown before playback. */
   poster?: string;
+  /** Set by the admin area on upload. See `isVideoItem`. */
+  kind?: MediaKind;
 }
 
 export const recentJobs: RecentJob[] = [
@@ -129,6 +149,8 @@ export const recentJobs: RecentJob[] = [
 export interface SiteVideo {
   title: string;
   src?: string;
+  /** Videos only: still frame shown before playback. */
+  poster?: string;
 }
 
 export const siteVideos: SiteVideo[] = [

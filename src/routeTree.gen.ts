@@ -10,17 +10,31 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CookiesRouteImport } from './routes/cookies'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as TermsRouteImport } from './routes/terms'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminGalleryRouteImport } from './routes/admin.gallery'
+import { Route as AdminLoginRouteImport } from './routes/admin.login'
+import { Route as AdminMediaRouteImport } from './routes/admin.media'
+import { Route as AdminRecentJobsRouteImport } from './routes/admin.recent-jobs'
+import { Route as AdminServicesRouteImport } from './routes/admin.services'
+import { Route as AdminSiteVideosRouteImport } from './routes/admin.site-videos'
+import { Route as AdminTeamRouteImport } from './routes/admin.team'
 import { Route as GalleryIndexRouteImport } from './routes/gallery.index'
 import { Route as ServicesSlugRouteImport } from './routes/services.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -48,6 +62,46 @@ const TermsRoute = TermsRouteImport.update({
   path: '/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminGalleryRoute = AdminGalleryRouteImport.update({
+  id: '/gallery',
+  path: '/gallery',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminMediaRoute = AdminMediaRouteImport.update({
+  id: '/media',
+  path: '/media',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminRecentJobsRoute = AdminRecentJobsRouteImport.update({
+  id: '/recent-jobs',
+  path: '/recent-jobs',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminServicesRoute = AdminServicesRouteImport.update({
+  id: '/services',
+  path: '/services',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminSiteVideosRoute = AdminSiteVideosRouteImport.update({
+  id: '/site-videos',
+  path: '/site-videos',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminTeamRoute = AdminTeamRouteImport.update({
+  id: '/team',
+  path: '/team',
+  getParentRoute: () => AdminRoute,
+} as any)
 const GalleryIndexRoute = GalleryIndexRouteImport.update({
   id: '/gallery/',
   path: '/gallery/',
@@ -61,12 +115,21 @@ const ServicesSlugRoute = ServicesSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
   '/contact': typeof ContactRoute
   '/cookies': typeof CookiesRoute
   '/privacy': typeof PrivacyRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
+  '/admin/gallery': typeof AdminGalleryRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/media': typeof AdminMediaRoute
+  '/admin/recent-jobs': typeof AdminRecentJobsRoute
+  '/admin/services': typeof AdminServicesRoute
+  '/admin/site-videos': typeof AdminSiteVideosRoute
+  '/admin/team': typeof AdminTeamRoute
   '/services/$slug': typeof ServicesSlugRoute
+  '/admin/': typeof AdminIndexRoute
   '/gallery/': typeof GalleryIndexRoute
 }
 export interface FileRoutesByTo {
@@ -76,30 +139,56 @@ export interface FileRoutesByTo {
   '/privacy': typeof PrivacyRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
+  '/admin/gallery': typeof AdminGalleryRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/media': typeof AdminMediaRoute
+  '/admin/recent-jobs': typeof AdminRecentJobsRoute
+  '/admin/services': typeof AdminServicesRoute
+  '/admin/site-videos': typeof AdminSiteVideosRoute
+  '/admin/team': typeof AdminTeamRoute
   '/services/$slug': typeof ServicesSlugRoute
+  '/admin': typeof AdminIndexRoute
   '/gallery': typeof GalleryIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
   '/contact': typeof ContactRoute
   '/cookies': typeof CookiesRoute
   '/privacy': typeof PrivacyRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
+  '/admin/gallery': typeof AdminGalleryRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/media': typeof AdminMediaRoute
+  '/admin/recent-jobs': typeof AdminRecentJobsRoute
+  '/admin/services': typeof AdminServicesRoute
+  '/admin/site-videos': typeof AdminSiteVideosRoute
+  '/admin/team': typeof AdminTeamRoute
   '/services/$slug': typeof ServicesSlugRoute
+  '/admin/': typeof AdminIndexRoute
   '/gallery/': typeof GalleryIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin'
     | '/contact'
     | '/cookies'
     | '/privacy'
     | '/sitemap.xml'
     | '/terms'
+    | '/admin/gallery'
+    | '/admin/login'
+    | '/admin/media'
+    | '/admin/recent-jobs'
+    | '/admin/services'
+    | '/admin/site-videos'
+    | '/admin/team'
     | '/services/$slug'
+    | '/admin/'
     | '/gallery/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -109,22 +198,40 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/sitemap.xml'
     | '/terms'
+    | '/admin/gallery'
+    | '/admin/login'
+    | '/admin/media'
+    | '/admin/recent-jobs'
+    | '/admin/services'
+    | '/admin/site-videos'
+    | '/admin/team'
     | '/services/$slug'
+    | '/admin'
     | '/gallery'
   id:
     | '__root__'
     | '/'
+    | '/admin'
     | '/contact'
     | '/cookies'
     | '/privacy'
     | '/sitemap.xml'
     | '/terms'
+    | '/admin/gallery'
+    | '/admin/login'
+    | '/admin/media'
+    | '/admin/recent-jobs'
+    | '/admin/services'
+    | '/admin/site-videos'
+    | '/admin/team'
     | '/services/$slug'
+    | '/admin/'
     | '/gallery/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRouteWithChildren
   ContactRoute: typeof ContactRoute
   CookiesRoute: typeof CookiesRoute
   PrivacyRoute: typeof PrivacyRoute
@@ -141,6 +248,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -178,6 +292,62 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/gallery': {
+      id: '/admin/gallery'
+      path: '/gallery'
+      fullPath: '/admin/gallery'
+      preLoaderRoute: typeof AdminGalleryRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/login': {
+      id: '/admin/login'
+      path: '/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/media': {
+      id: '/admin/media'
+      path: '/media'
+      fullPath: '/admin/media'
+      preLoaderRoute: typeof AdminMediaRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/recent-jobs': {
+      id: '/admin/recent-jobs'
+      path: '/recent-jobs'
+      fullPath: '/admin/recent-jobs'
+      preLoaderRoute: typeof AdminRecentJobsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/services': {
+      id: '/admin/services'
+      path: '/services'
+      fullPath: '/admin/services'
+      preLoaderRoute: typeof AdminServicesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/site-videos': {
+      id: '/admin/site-videos'
+      path: '/site-videos'
+      fullPath: '/admin/site-videos'
+      preLoaderRoute: typeof AdminSiteVideosRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/team': {
+      id: '/admin/team'
+      path: '/team'
+      fullPath: '/admin/team'
+      preLoaderRoute: typeof AdminTeamRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/gallery/': {
       id: '/gallery/'
       path: '/gallery'
@@ -195,8 +365,33 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AdminRouteChildren {
+  AdminGalleryRoute: typeof AdminGalleryRoute
+  AdminLoginRoute: typeof AdminLoginRoute
+  AdminMediaRoute: typeof AdminMediaRoute
+  AdminRecentJobsRoute: typeof AdminRecentJobsRoute
+  AdminServicesRoute: typeof AdminServicesRoute
+  AdminSiteVideosRoute: typeof AdminSiteVideosRoute
+  AdminTeamRoute: typeof AdminTeamRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminGalleryRoute: AdminGalleryRoute,
+  AdminLoginRoute: AdminLoginRoute,
+  AdminMediaRoute: AdminMediaRoute,
+  AdminRecentJobsRoute: AdminRecentJobsRoute,
+  AdminServicesRoute: AdminServicesRoute,
+  AdminSiteVideosRoute: AdminSiteVideosRoute,
+  AdminTeamRoute: AdminTeamRoute,
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRouteWithChildren,
   ContactRoute: ContactRoute,
   CookiesRoute: CookiesRoute,
   PrivacyRoute: PrivacyRoute,

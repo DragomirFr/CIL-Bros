@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Play } from "lucide-react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
-import { isVideo, type GalleryItem } from "@/data/site";
+import { isVideoItem, type GalleryItem } from "@/data/site";
 
 /**
  * Gallery grid. Tapping a tile opens a full-screen viewer that can be swiped
@@ -14,7 +14,7 @@ export function MediaGallery({ items }: { items: GalleryItem[] }) {
     <>
       <ul className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4">
         {items.map((item, index) => {
-          const video = isVideo(item.src);
+          const video = isVideoItem(item);
 
           return (
             <li key={`${item.src}-${index}`}>
@@ -88,7 +88,7 @@ function Lightbox({
         <DialogTitle className="sr-only">Gallery</DialogTitle>
         {item ? (
           <figure className="flex flex-col items-center justify-center gap-4 sm:gap-5">
-            {isVideo(item.src) ? (
+            {isVideoItem(item) ? (
               <video
                 src={item.src}
                 poster={item.poster}
