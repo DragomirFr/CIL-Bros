@@ -27,6 +27,72 @@ export const FACEBOOK_URL = "https://www.facebook.com/profile.php?id=61589360498
 
 export const images = { heroImg };
 
+const bundledAssetUrls: Record<string, string> = {
+  "/src/assets/att.pnB22cdPkFWaczbE7-26nvDTp0iMMtBO6LQ1uT4n1jI.jpg": siteGroundworksPhoto,
+  "src/assets/att.pnB22cdPkFWaczbE7-26nvDTp0iMMtBO6LQ1uT4n1jI.jpg": siteGroundworksPhoto,
+  "att.pnB22cdPkFWaczbE7-26nvDTp0iMMtBO6LQ1uT4n1jI.jpg": siteGroundworksPhoto,
+  "/src/assets/groundworks-foundation.jpg": groundworksFoundation,
+  "src/assets/groundworks-foundation.jpg": groundworksFoundation,
+  "groundworks-foundation.jpg": groundworksFoundation,
+  "/src/assets/concrete-flooring-finish.jpg": concreteFlooringFinish,
+  "src/assets/concrete-flooring-finish.jpg": concreteFlooringFinish,
+  "concrete-flooring-finish.jpg": concreteFlooringFinish,
+  "/src/assets/power-floating-real.jpg": powerFloatingReal,
+  "src/assets/power-floating-real.jpg": powerFloatingReal,
+  "power-floating-real.jpg": powerFloatingReal,
+  "/src/assets/att.jNpxFusAELkZNrHRMU08eq3HRpS-Q7o6iepe6w22RqQ.mp4": siteVideoOne,
+  "src/assets/att.jNpxFusAELkZNrHRMU08eq3HRpS-Q7o6iepe6w22RqQ.mp4": siteVideoOne,
+  "att.jNpxFusAELkZNrHRMU08eq3HRpS-Q7o6iepe6w22RqQ.mp4": siteVideoOne,
+  "/src/assets/att.doOE4iqsHqd8oW9d_aNhkSc_QMRrGy17CSICuoL2Zjo.mp4": siteVideoTwo,
+  "src/assets/att.doOE4iqsHqd8oW9d_aNhkSc_QMRrGy17CSICuoL2Zjo.mp4": siteVideoTwo,
+  "att.doOE4iqsHqd8oW9d_aNhkSc_QMRrGy17CSICuoL2Zjo.mp4": siteVideoTwo,
+  "/src/assets/att.7rfcVRnlu6lLY5zuMUUGBOszDFhCbdrznVKPihPvM-4.mp4": siteVideoThree,
+  "src/assets/att.7rfcVRnlu6lLY5zuMUUGBOszDFhCbdrznVKPihPvM-4.mp4": siteVideoThree,
+  "att.7rfcVRnlu6lLY5zuMUUGBOszDFhCbdrznVKPihPvM-4.mp4": siteVideoThree,
+  "/src/assets/att.U8PF3uejMWXDX61lmjwLsFGPnekzeCkl8YNpfwb-0jw.mp4": siteVideoFour,
+  "src/assets/att.U8PF3uejMWXDX61lmjwLsFGPnekzeCkl8YNpfwb-0jw.mp4": siteVideoFour,
+  "att.U8PF3uejMWXDX61lmjwLsFGPnekzeCkl8YNpfwb-0jw.mp4": siteVideoFour,
+  "/src/assets/att.-Uer7IrDT4p-ytbJ6VpgKBnB4_iUzyb1qLyKyy5N7rE.mp4": siteVideoFive,
+  "src/assets/att.-Uer7IrDT4p-ytbJ6VpgKBnB4_iUzyb1qLyKyy5N7rE.mp4": siteVideoFive,
+  "att.-Uer7IrDT4p-ytbJ6VpgKBnB4_iUzyb1qLyKyy5N7rE.mp4": siteVideoFive,
+  "/src/assets/recent1.mp4": recentJobOne,
+  "src/assets/recent1.mp4": recentJobOne,
+  "recent1.mp4": recentJobOne,
+  "/src/assets/recent2.mp4": recentJobTwo,
+  "src/assets/recent2.mp4": recentJobTwo,
+  "recent2.mp4": recentJobTwo,
+  "/src/assets/recent3.mp4": recentJobThree,
+  "src/assets/recent3.mp4": recentJobThree,
+  "recent3.mp4": recentJobThree,
+  "/src/assets/recent4.mp4": recentJobFour,
+  "src/assets/recent4.mp4": recentJobFour,
+  "recent4.mp4": recentJobFour,
+  "/src/assets/beams.jpg": beams,
+  "src/assets/beams.jpg": beams,
+  "beams.jpg": beams,
+  "/src/assets/insulation.jpg": insulation,
+  "src/assets/insulation.jpg": insulation,
+  "insulation.jpg": insulation,
+  "/src/assets/power-floating.png": powerfloating,
+  "src/assets/power-floating.png": powerfloating,
+  "power-floating.png": powerfloating,
+};
+
+/** Maps legacy `/src/assets/...` strings to the Vite-built asset URLs. */
+export function resolveBundledAssetUrl(value: string): string {
+  const trimmed = value.trim();
+  if (!trimmed) return trimmed;
+
+  const match = trimmed.match(/^([^?#]*)([?#].*)?$/);
+  const path = match?.[1] ?? trimmed;
+  const suffix = match?.[2] ?? "";
+
+  const resolved =
+    bundledAssetUrls[path] ?? bundledAssetUrls[path.replace(/^\.\//, "")] ?? bundledAssetUrls[path.split("/").pop() ?? ""];
+
+  return resolved ? `${resolved}${suffix}` : trimmed;
+}
+
 /**
  * A photo or video in the gallery.
  *
