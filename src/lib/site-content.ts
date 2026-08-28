@@ -5,6 +5,7 @@ import type { ContentSectionId } from "@/lib/admin-access";
 import {
   bundledContent,
   CONTENT_TABLE,
+  canonicalizeSection,
   resolveSection,
   type ContentShape,
   type ContentSource,
@@ -228,7 +229,8 @@ export async function publishSection<K extends ContentSectionId>(
   items: ContentShape[K],
   actor: string,
 ): Promise<void> {
-  const payload = (items as unknown as Record<string, unknown>[]).map(stripUndefined);
+  const canonical = canonicalizeSection(id, items);
+  const payload = (canonical as unknown as Record<string, unknown>[]).map(stripUndefined);
 
   // `updated_at` is set by the trigger in `supabase/schema.sql`, so a client
   // with a wrong clock cannot post-date an edit.

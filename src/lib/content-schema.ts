@@ -12,6 +12,7 @@ import {
   recentJobs as bundledRecentJobs,
   services as bundledServices,
   siteVideos as bundledSiteVideos,
+  resolveBundledAssetUrl,
   type GalleryItem,
   type MediaKind,
   type RecentJob,
@@ -83,11 +84,23 @@ export function resolveSection<K extends ContentSectionId>(
   return { items, source: "published" };
 }
 
+/** Converts a section to the URLs the production build actually serves. */
+export function canonicalizeSection<K extends ContentSectionId>(id: K, items: ContentShape[K]): ContentShape[K] {
+  return canonicalisers[id](items);
+}
+
 const normalisers: { [K in ContentSectionId]: (raw: unknown) => ContentShape[K] } = {
   gallery: normaliseGallery,
   recentJobs: normaliseRecentJobs,
   siteVideos: normaliseSiteVideos,
   services: normaliseServices,
+};
+
+const canonicalisers: { [K in ContentSectionId]: (items: ContentShape[K]) => ContentShape[K] } = {
+  gallery: canonicaliseGallery,
+  recentJobs: canonicaliseRecentJobs,
+  siteVideos: canonicaliseSiteVideos,
+  services: canonicaliseServices,
 };
 
 function readString(entry: unknown, key: string): string {
@@ -101,18 +114,22 @@ function readKind(entry: unknown): MediaKind | null {
   return value === "image" || value === "video" ? value : null;
 }
 
+function canonicalizeUrl(value: string): string {
+  return resolveBundledAssetUrl(value);
+}
+
 function normaliseGallery(raw: unknown): GalleryItem[] {
   if (!Array.isArray(raw)) return [];
 
   const items: GalleryItem[] = [];
   for (const entry of raw) {
-    const src = readString(entry, "src");
+    const src = canonicalizeUrl(readString(entry, "src"));
     if (!src) continue;
 
     const item: GalleryItem = { src, alt: readString(entry, "alt") };
     const caption = readString(entry, "caption");
     if (caption) item.caption = caption;
-    const poster = readString(entry, "poster");
+    const poster = canonicalizeUrl(readString(entry, "poster"));
     if (poster) item.poster = poster;
     const kind = readKind(entry);
     if (kind) item.kind = kind;
@@ -123,18 +140,26 @@ function normaliseGallery(raw: unknown): GalleryItem[] {
   return items;
 }
 
+function canonicaliseGallery(items: GalleryItem[]): GalleryItem[] {
+  return items.map((item) => ({
+    ...item,
+    src: canonicalizeUrl(item.src),
+    poster: item.poster ? canonicalizeUrl(item.poster) : item.poster,
+  }));
+}
+
 function normaliseRecentJobs(raw: unknown): RecentJob[] {
   if (!Array.isArray(raw)) return [];
 
   const items: RecentJob[] = [];
   raw.forEach((entry, index) => {
-    const src = readString(entry, "src");
+    const src = canonicalizeUrl(readString(entry, "src"));
     if (!src) return;
 
     const item: RecentJob = { title: readString(entry, "title") || `Recent job ${index + 1}`, src };
     const alt = readString(entry, "alt");
     if (alt) item.alt = alt;
-    const poster = readString(entry, "poster");
+    const poster = canonicalizeUrl(readString(entry, "poster"));
     if (poster) item.poster = poster;
     const kind = readKind(entry);
     if (kind) item.kind = kind;
@@ -145,21 +170,37 @@ function normaliseRecentJobs(raw: unknown): RecentJob[] {
   return items;
 }
 
+function canonicaliseRecentJobs(items: RecentJob[]): RecentJob[] {
+  return items.map((item) => ({
+    ...item,
+    src: canonicalizeUrl(item.src),
+    poster: item.poster ? canonicalizeUrl(item.poster) : item.poster,
+  }));
+}
+
 function normaliseSiteVideos(raw: unknown): SiteVideo[] {
   if (!Array.isArray(raw)) return [];
 
   const items: SiteVideo[] = [];
   raw.forEach((entry, index) => {
     const item: SiteVideo = { title: readString(entry, "title") || `Site video ${index + 1}` };
-    const src = readString(entry, "src");
+    const src = canonicalizeUrl(readString(entry, "src"));
     if (src) item.src = src;
-    const poster = readString(entry, "poster");
+    const poster = canonicalizeUrl(readString(entry, "poster"));
     if (poster) item.poster = poster;
 
     items.push(item);
   });
 
   return items;
+}
+
+function canonicaliseSiteVideos(items: SiteVideo[]): SiteVideo[] {
+  return items.map((item) => ({
+    ...item,
+    src: item.src ? canonicalizeUrl(item.src) : item.src,
+    poster: item.poster ? canonicalizeUrl(item.poster) : item.poster,
+  }));
 }
 
 function normaliseServices(raw: unknown): Service[] {
@@ -181,13 +222,20 @@ function normaliseServices(raw: unknown): Service[] {
       title,
       text: readString(entry, "text"),
     };
-    const image = readString(entry, "image");
+    const image = canonicalizeUrl(readString(entry, "image"));
     if (image) item.image = image;
 
     items.push(item);
   });
 
   return items;
+}
+
+function canonicaliseServices(items: Service[]): Service[] {
+  return items.map((item) => ({
+    ...item,
+    image: item.image ? canonicalizeUrl(item.image) : item.image,
+  }));
 }
 
 /** "01", "02", ... — the label shown above each service tile. */
